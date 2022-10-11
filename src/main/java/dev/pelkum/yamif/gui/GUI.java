@@ -2,6 +2,9 @@ package dev.pelkum.yamif.gui;
 
 import dev.pelkum.yamif.components.Component;
 import dev.pelkum.yamif.grid.SlotRange;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,10 +16,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * Represents a basic GUI
@@ -146,6 +145,14 @@ public class GUI {
         plugin.getServer().getPluginManager().registerEvents(new InteractionListener(), plugin);
     }
 
+    public void destroy() {
+        this.inventory.clear();
+    }
+
+    public Inventory getInventory() {
+        return this.inventory;
+    }
+
     /**
      * Represents the interaction listener of a GUI
      *
@@ -244,6 +251,7 @@ public class GUI {
          * Checks whether or not an inventory corresponds to the GUI
          *
          * @param inventory The inventory to check
+         *
          * @return Whether or not the given inventory corresponds to the GUI
          */
         private boolean corresponds(final Inventory inventory) {
