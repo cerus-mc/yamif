@@ -107,7 +107,7 @@ public class GUI {
      * @param handler The handler to call when an item gets clicked - no checks in regard to which inv is clicked are performed
      */
     public void doOnUncheckedClick(final Consumer<InventoryClickEvent> handler) {
-        this.onClickHandler = handler;
+        this.onUncheckedClickHandler = handler;
     }
 
     /**
