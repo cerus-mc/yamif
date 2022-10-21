@@ -33,6 +33,7 @@ public class GUI {
 
     // Define the inventory click, drag and close handlers
     private Consumer<InventoryClickEvent> onClickHandler;
+    private Consumer<InventoryClickEvent> onUncheckedClickHandler;
     private Consumer<InventoryDragEvent> onDragHandler;
     private Consumer<InventoryCloseEvent> onCloseHandler;
 
@@ -97,6 +98,15 @@ public class GUI {
      * @param handler The handler to call when an item gets clicked
      */
     public void doOnClick(final Consumer<InventoryClickEvent> handler) {
+        this.onClickHandler = handler;
+    }
+
+    /**
+     * Registers the GUI unchecked click handler
+     *
+     * @param handler The handler to call when an item gets clicked - no checks in regard to which inv is clicked are performed
+     */
+    public void doOnUncheckedClick(final Consumer<InventoryClickEvent> handler) {
         this.onClickHandler = handler;
     }
 
@@ -176,6 +186,11 @@ public class GUI {
                     event.setCancelled(true);
                     return;
                 }
+            }
+
+            // Trigger the GUI unchecked click handler
+            if (GUI.this.onUncheckedClickHandler != null) {
+                GUI.this.onUncheckedClickHandler.accept(event);
             }
 
             // Check if the involved inventory corresponds to the GUI
