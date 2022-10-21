@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -12,11 +12,27 @@
     <artifactId>yamif</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <distributionManagement>
+        <repository>
+            <id>hb-nexus</id>
+            <url>https://nexus.horstblocks.dev/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>hb-nexus</id>
+            <url>https://nexus.horstblocks.dev/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <developers>
         <developer>
             <name>Lukas Schulte Pelkum</name>
             <email>kbrt@protonmail.com</email>
             <url>https://pelkum.dev</url>
+        </developer>
+        <developer>
+            <name>Maximilian Dorn</name>
+            <email>max@cerus.dev</email>
+            <url>https://cerus.dev</url>
         </developer>
     </developers>
 
@@ -26,12 +42,6 @@
             <url>http://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
-
-    <scm>
-        <connection>scm:git:git://github.com/lus/yamif.git</connection>
-        <developerConnection>scm:git:ssh://github.com:lus/yamif.git</developerConnection>
-        <url>http://github.com/lus/yamif/tree/master</url>
-    </scm>
 
     <repositories>
         <repository>
