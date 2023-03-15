@@ -47,7 +47,7 @@ public class GUI {
      * @param rows  The number of rows of the GUI
      */
     public GUI(final String title, final int rows) {
-        this.inventory = Bukkit.createInventory(new GUIInventoryHolder(), rows * 9, title);
+        this.inventory = Bukkit.createInventory(new GUIInventoryHolder(this), rows * 9, title);
         this.components = new HashMap<>();
         this.interactionPolicies = new HashMap<>();
         this.shiftClickAllowed = false;
