@@ -37,8 +37,9 @@ public class GUI {
     private Consumer<InventoryDragEvent> onDragHandler;
     private Consumer<InventoryCloseEvent> onCloseHandler;
 
-    // Define the shift-click allowment state
+    // Define flags
     private boolean shiftClickAllowed;
+    private boolean bottomCollectAllowed;
 
     /**
      * Creates a new GUI
@@ -136,6 +137,13 @@ public class GUI {
     }
 
     /**
+     * Allows COLLECT_TO_CURSOR on bottom inventory
+     */
+    public void allowCollectToCursorFromBottom() {
+        this.bottomCollectAllowed = true;
+    }
+
+    /**
      * Opens the GUI to a player
      *
      * @param plugin The plugin to register the interaction listener with
@@ -174,6 +182,15 @@ public class GUI {
 
         @EventHandler
         public void handleInventoryClick(final InventoryClickEvent event) {
+            // Check explicitly for bottom-level collects
+            if (this.corresponds(event.getView().getTopInventory())
+                && event.getView().getBottomInventory() == event.getClickedInventory()
+                && event.getAction() == InventoryAction.COLLECT_TO_CURSOR
+                && !GUI.this.bottomCollectAllowed) {
+                event.setCancelled(true);
+                return;
+            }
+
             // Check if the event was called during a shift-click
             if (event.isShiftClick() || event.getAction().equals(InventoryAction.COLLECT_TO_CURSOR)) {
                 // Check if one of the two inventories is the GUI one
