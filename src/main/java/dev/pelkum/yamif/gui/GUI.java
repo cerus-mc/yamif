@@ -4,6 +4,7 @@ import dev.pelkum.yamif.components.Component;
 import dev.pelkum.yamif.grid.SlotRange;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -33,7 +34,7 @@ public class GUI {
 
     // Define the inventory click, drag and close handlers
     private Consumer<InventoryClickEvent> onClickHandler;
-    private Consumer<InventoryClickEvent> onUncheckedClickHandler;
+    private BiConsumer<InventoryClickEvent, Boolean> onUncheckedClickHandler;
     private Consumer<InventoryDragEvent> onDragHandler;
     private Consumer<InventoryCloseEvent> onCloseHandler;
 
@@ -107,7 +108,7 @@ public class GUI {
      *
      * @param handler The handler to call when an item gets clicked - no checks in regard to which inv is clicked are performed
      */
-    public void doOnUncheckedClick(final Consumer<InventoryClickEvent> handler) {
+    public void doOnUncheckedClick(final BiConsumer<InventoryClickEvent, Boolean> handler) {
         this.onUncheckedClickHandler = handler;
     }
 
@@ -205,13 +206,15 @@ public class GUI {
                 }
             }
 
+            final boolean corresponds = this.corresponds(event.getClickedInventory());
+
             // Trigger the GUI unchecked click handler
             if (GUI.this.onUncheckedClickHandler != null) {
-                GUI.this.onUncheckedClickHandler.accept(event);
+                GUI.this.onUncheckedClickHandler.accept(event, corresponds);
             }
 
             // Check if the involved inventory corresponds to the GUI
-            if (!this.corresponds(event.getClickedInventory())) {
+            if (!corresponds) {
                 return;
             }
 
